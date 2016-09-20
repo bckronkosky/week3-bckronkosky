@@ -61,6 +61,14 @@ library(dplyr)
 ```
 
 ```r
+library(foreign)
+```
+
+```
+## Warning: package 'foreign' was built under R version 3.1.3
+```
+
+```r
 #--------------------
 ```
 
@@ -75,7 +83,7 @@ usshape   <-readShapeSpatial('US_Bndry_Jursidictional_TIGER.shp',
                              proj4string = CRS("+proj=longlat")
                             )
 
-accidents               <- read.csv('accident.csv',stringsAsFactors=FALSE )
+accidents               <- read.dbf('accident.dbf' )
 accidents               <- accidents[accidents$LONGITUD<0,]
 coordinates(accidents)  <- ~LONGITUD+LATITUDE
 
@@ -101,7 +109,7 @@ txshape                <- fortify(txshape,region='FIPS')
 colnames(txshape)[6]   <- 'FIPS'
 txshape$FIPS           <- as.integer(txshape$FIPS)
 
-tx.accidents           <- read.csv('accident.csv',stringsAsFactors=FALSE )
+tx.accidents           <- read.dbf('accident.dbf')
 tx.accidents           <- as.integer(tx.accidents[tx.accidents$STATE==48,10])
 tx.accidents           <- data.frame(table(tx.accidents))
 colnames(tx.accidents) <- c('FIPS','ACCIDENT_COUNT')
